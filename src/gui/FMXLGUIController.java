@@ -14,9 +14,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class FMXLGUIController implements Initializable{
@@ -42,6 +44,12 @@ public class FMXLGUIController implements Initializable{
         cbSection.getItems().add(".data");
         cbSection.setValue(".code");
         
+        tableAssemblyCode.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        tableAssemblyData.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        
+        tfLabel.requestFocus();
+        tfLabel.selectAll();
+
         newButtonAction(null);
 	}
 	
@@ -110,10 +118,10 @@ public class FMXLGUIController implements Initializable{
     }
 
     @FXML public void closeItemAction(ActionEvent event) {
-
+        System.exit(0);
     }
 
-    @FXML public void sectionEdit(ActionEvent event) {
+    @FXML public void sectionEdit(CellEditEvent event) {
 
     }
 
@@ -178,7 +186,9 @@ public class FMXLGUIController implements Initializable{
         //loop over the selected rows and remove the AssemblyCode objects from the table
         for (AssemblyCode codes: selectedRowsCode)
         {
-            allCodesCode.remove(codes);
+            if(codes.getSection().equals("")){
+                allCodesCode.remove(codes);
+            }
         }
 
         ObservableList<AssemblyCode> selectedRowsData, allCodesData;
@@ -190,7 +200,9 @@ public class FMXLGUIController implements Initializable{
         //loop over the selected rows and remove the AssemblyData objects from the table
         for (AssemblyCode codes: selectedRowsData)
         {
-            allCodesData.remove(codes);
+            if(codes.getSection().equals("")){
+                allCodesData.remove(codes);
+            }
         }
     }
 	
