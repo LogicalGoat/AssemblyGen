@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 
 import coding.AssemblyCode;
 import fileManager.FileManager;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,6 +24,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.stage.FileChooser;
 
 public class FMXLGUIController implements Initializable{
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -107,8 +109,6 @@ public class FMXLGUIController implements Initializable{
 
     @FXML private ChoiceBox<String> cbSection;
     
-    static File currentFile;
-    
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -130,11 +130,34 @@ public class FMXLGUIController implements Initializable{
     }
 
     @FXML public void openButtonAction(ActionEvent event) {
-        FileManager fm = new FileManager("C:\\Users\\ansil\\Desktop\\alg01.acf");
+        FileChooser fc = new FileChooser();
+        File file = fc.showOpenDialog(null);
+        FileManager fm = new FileManager(file.getAbsolutePath());
+        lbFile.setText(file.getAbsolutePath());
         ArrayList<AssemblyCode> as = fm.loadCode();
+        fillTables(as);
+    }
+    
+    public void fillTables(ArrayList<AssemblyCode> as) {
+        ObservableList<AssemblyCode> olCode = FXCollections.observableArrayList();
+        ObservableList<AssemblyCode> olData = FXCollections.observableArrayList();
+        boolean wData = false;
         for (AssemblyCode temp : as) {
-            System.out.println(temp.toString());
+            if((temp.getSection().equals(".data")||(wData))){
+                wData = true;
+                olData.add(temp);
+            }else{
+                olCode.add(temp);
+            }
         }
+        while (!tableAssemblyCode.getItems().isEmpty()) {
+            tableAssemblyCode.getItems().remove(0);
+        }
+        while (!tableAssemblyData.getItems().isEmpty()) {
+            tableAssemblyData.getItems().remove(0);
+        }
+        tableAssemblyCode.setItems(olCode);
+        tableAssemblyData.setItems(olData);
     }
 
     @FXML public void closeItemAction(ActionEvent event) {

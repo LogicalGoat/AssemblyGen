@@ -66,9 +66,11 @@ public class FileManager {
                 for (int i = 0; i < sCode.size(); i++) {
                     System.out.println(sCode.get(i));
                 }
-                AssemblyCode code = new AssemblyCode(sCode.get(0), sCode.get(1), sCode.get(2), sCode.get(3));
-                code.toString();
-                codes.add(code);
+                if(!(sCode.get(0).equals("")&&sCode.get(1).equals("")&&sCode.get(2).equals("")&&sCode.get(3).equals(""))){
+                    AssemblyCode code = new AssemblyCode(sCode.get(0), sCode.get(1), sCode.get(2), sCode.get(3));
+                    code.toString();
+                    codes.add(code);
+                }
             }
 	    }catch (FileNotFoundException e) {
             System.err.println("File not found -- " + this.ruta);
