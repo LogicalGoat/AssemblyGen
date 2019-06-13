@@ -2,9 +2,11 @@ package gui;
 
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import coding.AssemblyCode;
+import fileManager.FileManager;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,6 +22,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 
 public class FMXLGUIController implements Initializable{
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -46,7 +49,19 @@ public class FMXLGUIController implements Initializable{
         
         tableAssemblyCode.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         tableAssemblyData.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        
+
+        // tableAssemblyCode.setEditable(true);
+
+        // colLabelCode.setCellFactory(TextFieldTableCell.forTableColumn());
+        // colMnemoCode.setCellFactory(TextFieldTableCell.forTableColumn());
+        // colOperandsCode.setCellFactory(TextFieldTableCell.forTableColumn());
+
+        // tableAssemblyData.setEditable(true);
+
+        // colLabelData.setCellFactory(TextFieldTableCell.forTableColumn());
+        // colMnemoData.setCellFactory(TextFieldTableCell.forTableColumn());
+        // colOperandsData.setCellFactory(TextFieldTableCell.forTableColumn());
+
         tfLabel.requestFocus();
         tfLabel.selectAll();
 
@@ -63,7 +78,8 @@ public class FMXLGUIController implements Initializable{
 	@FXML private TableColumn<AssemblyCode, String> colSectionCode;
 	@FXML private TableColumn<AssemblyCode, String> colLabelCode;
 	@FXML private TableColumn<AssemblyCode, String> colMnemoCode;
-	@FXML private TableColumn<AssemblyCode, String> colOperandsCode;
+    @FXML private TableColumn<AssemblyCode, String> colOperandsCode;
+    
 	@FXML private TableColumn<AssemblyCode, String> colSectionData;
 	@FXML private TableColumn<AssemblyCode, String> colLabelData;
 	@FXML private TableColumn<AssemblyCode, String> colMnemoData;
@@ -114,15 +130,26 @@ public class FMXLGUIController implements Initializable{
     }
 
     @FXML public void openButtonAction(ActionEvent event) {
-
+        FileManager fm = new FileManager("C:\\Users\\ansil\\Desktop\\alg01.acf");
+        ArrayList<AssemblyCode> as = fm.loadCode();
+        for (AssemblyCode temp : as) {
+            System.out.println(temp.toString());
+        }
     }
 
     @FXML public void closeItemAction(ActionEvent event) {
         System.exit(0);
     }
 
-    @FXML public void sectionEdit(CellEditEvent event) {
-
+    @FXML public void sectionEdit(CellEditEvent edittedCell) {
+    //     AssemblyCode AssemblyCodeSelected =  tableAssemblyCode.getSelectionModel().getSelectedItem();
+    //     if (AssemblyCodeSelected.getSection().equals("")) {
+    //         AssemblyCodeSelected.setSection(edittedCell.getNewValue().toString());  
+    //         assemblyWarning.setVisible(false);
+    //     } else {
+    //         assemblyWarning.setVisible(true);
+    //     }
+    //     System.out.println("Hola");
     }
 
     @FXML public void addButtonAction(ActionEvent event) {

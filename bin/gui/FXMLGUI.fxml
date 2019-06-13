@@ -73,9 +73,9 @@
                                              </columnResizePolicy>
                                              <columns>
                                                 <TableColumn fx:id="colSectionCode" onEditCommit="#sectionEdit" prefWidth="75.0" sortable="false" text="SECTION" />
-                                                <TableColumn fx:id="colLabelCode" prefWidth="75.0" sortable="false" text="LABEL" />
-                                                <TableColumn fx:id="colMnemoCode" prefWidth="75.0" sortable="false" text="MNEMO" />
-                                                <TableColumn fx:id="colOperandsCode" prefWidth="75.0" sortable="false" text="OPERANDS" />
+                                                <TableColumn fx:id="colLabelCode" onEditCommit="#sectionEdit" prefWidth="75.0" sortable="false" text="LABEL" />
+                                                <TableColumn fx:id="colMnemoCode" onEditCommit="#sectionEdit" prefWidth="75.0" sortable="false" text="MNEMO" />
+                                                <TableColumn fx:id="colOperandsCode" onEditCommit="#sectionEdit" prefWidth="75.0" sortable="false" text="OPERANDS" />
                                              </columns>
                                           </TableView>
                                        </children>
@@ -92,9 +92,9 @@
                                              </columnResizePolicy>
                                              <columns>
                                                 <TableColumn fx:id="colSectionData" onEditCommit="#sectionEdit" prefWidth="75.0" sortable="false" text="SECTION" />
-                                                <TableColumn fx:id="colLabelData" prefWidth="75.0" sortable="false" text="LABEL" />
-                                                <TableColumn fx:id="colMnemoData" prefWidth="75.0" sortable="false" text="MNEMO" />
-                                                <TableColumn fx:id="colOperandsData" prefWidth="75.0" sortable="false" text="OPERANDS" />
+                                                <TableColumn fx:id="colLabelData" onEditCommit="#sectionEdit" prefWidth="75.0" sortable="false" text="LABEL" />
+                                                <TableColumn fx:id="colMnemoData" onEditCommit="#sectionEdit" prefWidth="75.0" sortable="false" text="MNEMO" />
+                                                <TableColumn fx:id="colOperandsData" onEditCommit="#sectionEdit" prefWidth="75.0" sortable="false" text="OPERANDS" />
                                              </columns>
                                           </TableView>
                                        </children>

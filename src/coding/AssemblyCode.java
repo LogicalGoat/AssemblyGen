@@ -12,6 +12,11 @@ public class AssemblyCode {
         this.mnemo = mnemo;
         this.operands = operands;
     }
+
+    @Override
+    public String toString() {
+        return "section: "+this.section+", label: "+this.label+", mnemo: "+this.mnemo+", operands: "+this.operands;
+    }
     
     /**
      * @return the label
