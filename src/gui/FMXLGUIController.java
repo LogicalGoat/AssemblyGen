@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import coding.AssemblyCode;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -113,11 +114,80 @@ public class FMXLGUIController implements Initializable{
     }
 
     @FXML public void addButtonAction(ActionEvent event) {
-
+        if(cbSection.getSelectionModel().getSelectedItem().equals(".code")){
+            if (
+                tfMnemo.getText().equals("load")||
+                tfMnemo.getText().equals("store")||
+                tfMnemo.getText().equals("add")||
+                tfMnemo.getText().equals("sub")||
+                tfMnemo.getText().equals("input")||
+                tfMnemo.getText().equals("output")||
+                tfMnemo.getText().equals("jpos")||
+                tfMnemo.getText().equals("jneg")||
+                tfMnemo.getText().equals("jz")||
+                tfMnemo.getText().equals("jnz")||
+                tfMnemo.getText().equals("jmp")||
+                tfMnemo.getText().equals("halt")
+            ){
+                System.out.println("Adding.....OK");
+                AssemblyCode newAssemblyCode = new AssemblyCode("",tfLabel.getText(),tfMnemo.getText(),tfOperands.getText());
+                tableAssemblyCode.getItems().add(newAssemblyCode);
+                assemblyWarning.setVisible(false);
+            } else {
+                System.err.println("Adding.....Failed");
+                assemblyWarning.setVisible(true);
+            }
+            tfLabel.setText("");
+            tfMnemo.setText("");
+            tfOperands.setText("");
+            tfLabel.requestFocus();
+            tfLabel.selectAll();
+        } else {
+            if (
+                tfMnemo.getText().equals("db")||
+                tfMnemo.getText().equals("equ")
+            ){
+                System.out.println("Adding.....OK");
+                AssemblyCode newAssemblyCode = new AssemblyCode("",tfLabel.getText(),"db",tfOperands.getText());
+                tableAssemblyData.getItems().add(newAssemblyCode);
+                assemblyWarning.setVisible(false);
+            } else {
+                System.err.println("Adding.....Failed");
+                assemblyWarning.setVisible(true);
+            }
+            tfLabel.setText("");
+            tfMnemo.setText("");
+            tfOperands.setText("");
+            tfLabel.requestFocus();
+            tfLabel.selectAll();
+        }
     }
 
     @FXML public void delButtonAction(ActionEvent event) {
+        System.out.println("Deleting.....");
+        ObservableList<AssemblyCode> selectedRowsCode, allCodesCode;
+        allCodesCode = tableAssemblyCode.getItems();
+        
+        //this gives us the rows that were selected
+        selectedRowsCode = tableAssemblyCode.getSelectionModel().getSelectedItems();
+        
+        //loop over the selected rows and remove the AssemblyCode objects from the table
+        for (AssemblyCode codes: selectedRowsCode)
+        {
+            allCodesCode.remove(codes);
+        }
 
+        ObservableList<AssemblyCode> selectedRowsData, allCodesData;
+        allCodesData = tableAssemblyData.getItems();
+        
+        //this gives us the rows that were selected
+        selectedRowsData = tableAssemblyData.getSelectionModel().getSelectedItems();
+        
+        //loop over the selected rows and remove the AssemblyData objects from the table
+        for (AssemblyCode codes: selectedRowsData)
+        {
+            allCodesData.remove(codes);
+        }
     }
 	
 }
