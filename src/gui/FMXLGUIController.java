@@ -91,8 +91,12 @@ public class FMXLGUIController implements Initializable{
     
     @FXML public void newButtonAction(ActionEvent event) {
     	lbFile.setText("Nuevo proyecto");
-    	tableAssemblyCode.getItems().removeAll();
-    	tableAssemblyData.getItems().removeAll();
+    	while (!tableAssemblyCode.getItems().isEmpty()) {
+            tableAssemblyCode.getItems().remove(0);
+        }
+        while (!tableAssemblyData.getItems().isEmpty()) {
+            tableAssemblyData.getItems().remove(0);
+        }
     	tableAssemblyCode.getItems().add(new AssemblyCode(".code","","",""));
         tableAssemblyData.getItems().add(new AssemblyCode(".data","","",""));
     }
