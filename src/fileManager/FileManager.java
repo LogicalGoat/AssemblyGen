@@ -1,56 +1,31 @@
 package fileManager;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 import coding.AssemblyCode;
+import javafx.collections.ObservableList;
 
 /**
  * FileManager
  */
 public class FileManager {
-    private String ruta;
+    private String address;
 
-    public FileManager(String ruta) {
-        this.ruta = ruta;
+    public FileManager(String address) {
+        this.address = address;
     }
     
-    //El formato de guardado por linea es: NombreAssemblyCode,score,
-    // public boolean saveFile(ArrayList<AssemblyCode> AssemblyCodes)throws FileNotFoundException, IOException{
-    //     BufferedWriter salida = null;
-        
-    //     FileWriter fw = null;
-
-    //     File file = new File(this.ruta);
-    //     if (!file.exists()) {
-    //         file.createNewFile();
-    //     }
-            
-    //     //El true permite seguir escribiendo en el archivo sin que s sobreescriba lo ya existente
-    //     fw = new FileWriter(file.getAbsoluteFile(), true);
-    //     salida = new BufferedWriter(fw);
-        
-    //     for(AssemblyCode AssemblyCode : AssemblyCodes){
-    //         salida.write(AssemblyCode.getNombre());
-    //         salida.write(",");
-    //         salida.write(String.valueOf(AssemblyCode.getScore()));
-    //         salida.write(",\n");
-    //     }
-    //     salida.flush();
-    //     salida.close();
-    //     return true;
-    // }
+    public void saveCode(ObservableList<AssemblyCode> code, ObservableList<AssemblyCode> data) {
+    }
     
     public ArrayList<AssemblyCode> loadCode(){
         ArrayList<AssemblyCode> codes = new ArrayList<AssemblyCode>();
         Scanner sc;
         try {
-            sc = new Scanner(new File(this.ruta));
+            sc = new Scanner(new File(this.address));
             while (sc.hasNext()) {
                 String line = sc.nextLine(), temp = "";
                 ArrayList<String> sCode = new ArrayList<String>();
@@ -73,7 +48,7 @@ public class FileManager {
                 }
             }
 	    }catch (FileNotFoundException e) {
-            System.err.println("File not found -- " + this.ruta);
+            System.err.println("404 not found -- " + this.address);
             e.printStackTrace();
 	    }
 	    return codes;

@@ -23,8 +23,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;;
 
 public class FMXLGUIController implements Initializable{
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -91,6 +91,7 @@ public class FMXLGUIController implements Initializable{
     @FXML private Label assemblyWarning;
 
     @FXML private MenuItem saveMenuItem;
+    @FXML private MenuItem saveAsMenuItem;
     @FXML private MenuItem openMenuItem;
     @FXML private MenuItem newMenuItem;
     @FXML private MenuItem closeMenuItem;
@@ -108,6 +109,8 @@ public class FMXLGUIController implements Initializable{
     @FXML private TextField tfOperands;
 
     @FXML private ChoiceBox<String> cbSection;
+
+    static FileManager fm;
     
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -126,13 +129,23 @@ public class FMXLGUIController implements Initializable{
     }
 
     @FXML public void saveButtonAction(ActionEvent event) {
+        if(lbFile.getText().equals("Nuevo proyecto")){
+            saveAsButtonAction(null);
+        }else{
+
+        }
+    }
+
+    @FXML public void saveAsButtonAction(ActionEvent event) {
 
     }
 
     @FXML public void openButtonAction(ActionEvent event) {
         FileChooser fc = new FileChooser();
+        fc.setTitle("Abrir archivo de codigo AGF");
+        fc.getExtensionFilters().add(new ExtensionFilter("Assembly Generator File", "*.agf"));
         File file = fc.showOpenDialog(null);
-        FileManager fm = new FileManager(file.getAbsolutePath());
+        fm = new FileManager(file.getAbsolutePath());
         lbFile.setText(file.getAbsolutePath());
         ArrayList<AssemblyCode> as = fm.loadCode();
         fillTables(as);
@@ -164,7 +177,7 @@ public class FMXLGUIController implements Initializable{
         System.exit(0);
     }
 
-    @FXML public void sectionEdit(CellEditEvent edittedCell) {
+    @FXML public void sectionEdit(CellEditEvent<AssemblyCode, String> edittedCell) {
     //     AssemblyCode AssemblyCodeSelected =  tableAssemblyCode.getSelectionModel().getSelectedItem();
     //     if (AssemblyCodeSelected.getSection().equals("")) {
     //         AssemblyCodeSelected.setSection(edittedCell.getNewValue().toString());  

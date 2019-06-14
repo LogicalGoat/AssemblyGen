@@ -14,8 +14,12 @@
             <Menu mnemonicParsing="false" text="Archivo">
                <items>
                   <MenuItem fx:id="newMenuItem" mnemonicParsing="false" onAction="#newButtonAction" text="Nuevo" />
-                  <MenuItem fx:id="saveMenuItem" mnemonicParsing="false" onAction="#saveButtonAction" text="Guardar" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem fx:id="openMenuItem" mnemonicParsing="false" onAction="#openButtonAction" text="Abrir" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem fx:id="saveMenuItem" mnemonicParsing="false" onAction="#saveButtonAction" text="Guardar" />
+                  <MenuItem fx:id="saveAsMenuItem" mnemonicParsing="false" onAction="#saveAsButtonAction" text="Guardar como..." />
+                  <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem fx:id="closeMenuItem" mnemonicParsing="false" onAction="#closeItemAction" text="Cerrar" />
                </items>
             </Menu>
