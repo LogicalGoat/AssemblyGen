@@ -42,12 +42,12 @@
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveButtonAction" text="💾">
+            <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveButtonAction" text="📄💾">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button fx:id="openButton" mnemonicParsing="false" onAction="#openButtonAction" text="📂">
+            <Button fx:id="openButton" mnemonicParsing="false" onAction="#openButtonAction" text="📄💾📂">
                <font>
                   <Font size="18.0" />
                </font>
@@ -67,7 +67,7 @@
                      <children>
                         <Accordion fx:id="acAssembly" prefHeight="306.0" prefWidth="680.0" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="20.0">
                            <panes>
-                              <TitledPane text=".code">
+                              <TitledPane fx:id="tpCode" text=".code">
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
@@ -76,17 +76,17 @@
                                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                              </columnResizePolicy>
                                              <columns>
-                                                <TableColumn fx:id="colSectionCode" onEditCommit="#sectionEdit" prefWidth="75.0" sortable="false" text="SECTION" />
-                                                <TableColumn fx:id="colLabelCode" onEditCommit="#sectionEdit" prefWidth="75.0" sortable="false" text="LABEL" />
-                                                <TableColumn fx:id="colMnemoCode" onEditCommit="#sectionEdit" prefWidth="75.0" sortable="false" text="MNEMO" />
-                                                <TableColumn fx:id="colOperandsCode" onEditCommit="#sectionEdit" prefWidth="75.0" sortable="false" text="OPERANDS" />
+                                                <TableColumn fx:id="colSectionCode" prefWidth="75.0" sortable="false" text="SECTION" />
+                                                <TableColumn fx:id="colLabelCode" prefWidth="75.0" sortable="false" text="LABEL" />
+                                                <TableColumn fx:id="colMnemoCode" prefWidth="75.0" sortable="false" text="MNEMO" />
+                                                <TableColumn fx:id="colOperandsCode" prefWidth="75.0" sortable="false" text="OPERANDS" />
                                              </columns>
                                           </TableView>
                                        </children>
                                     </AnchorPane>
                                  </content>
                               </TitledPane>
-                              <TitledPane text=".data">
+                              <TitledPane fx:id="tpData" text=".data">
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
@@ -95,10 +95,10 @@
                                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                              </columnResizePolicy>
                                              <columns>
-                                                <TableColumn fx:id="colSectionData" onEditCommit="#sectionEdit" prefWidth="75.0" sortable="false" text="SECTION" />
-                                                <TableColumn fx:id="colLabelData" onEditCommit="#sectionEdit" prefWidth="75.0" sortable="false" text="LABEL" />
-                                                <TableColumn fx:id="colMnemoData" onEditCommit="#sectionEdit" prefWidth="75.0" sortable="false" text="MNEMO" />
-                                                <TableColumn fx:id="colOperandsData" onEditCommit="#sectionEdit" prefWidth="75.0" sortable="false" text="OPERANDS" />
+                                                <TableColumn fx:id="colSectionData" prefWidth="75.0" sortable="false" text="SECTION" />
+                                                <TableColumn fx:id="colLabelData" prefWidth="75.0" sortable="false" text="LABEL" />
+                                                <TableColumn fx:id="colMnemoData" prefWidth="75.0" sortable="false" text="MNEMO" />
+                                                <TableColumn fx:id="colOperandsData" prefWidth="75.0" sortable="false" text="OPERANDS" />
                                              </columns>
                                           </TableView>
                                        </children>
@@ -135,12 +135,17 @@
                            <children>
                               <Button fx:id="addButton" defaultButton="true" mnemonicParsing="false" onAction="#addButtonAction" prefWidth="100.0" text="Añadir" HBox.hgrow="ALWAYS">
                                  <HBox.margin>
-                                    <Insets right="50.0" />
+                                    <Insets left="25.0" right="25.0" />
                                  </HBox.margin>
                               </Button>
                               <Button fx:id="delButton" mnemonicParsing="false" onAction="#delButtonAction" prefHeight="25.0" prefWidth="100.0" text="Eliminar" textAlignment="CENTER" HBox.hgrow="ALWAYS">
                                  <HBox.margin>
-                                    <Insets left="50.0" />
+                                    <Insets left="25.0" right="25.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button fx:id="editButton" mnemonicParsing="false" onAction="#editButtonAction" prefHeight="25.0" prefWidth="100.0" text="Editar" textAlignment="CENTER">
+                                 <HBox.margin>
+                                    <Insets left="25.0" right="25.0" />
                                  </HBox.margin>
                               </Button>
                            </children>

@@ -21,7 +21,7 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TableColumn.CellEditEvent;
+import javafx.scene.control.TitledPane;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;;
@@ -52,18 +52,6 @@ public class FMXLGUIController implements Initializable{
         tableAssemblyCode.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         tableAssemblyData.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-        // tableAssemblyCode.setEditable(true);
-
-        // colLabelCode.setCellFactory(TextFieldTableCell.forTableColumn());
-        // colMnemoCode.setCellFactory(TextFieldTableCell.forTableColumn());
-        // colOperandsCode.setCellFactory(TextFieldTableCell.forTableColumn());
-
-        // tableAssemblyData.setEditable(true);
-
-        // colLabelData.setCellFactory(TextFieldTableCell.forTableColumn());
-        // colMnemoData.setCellFactory(TextFieldTableCell.forTableColumn());
-        // colOperandsData.setCellFactory(TextFieldTableCell.forTableColumn());
-
         tfLabel.requestFocus();
         tfLabel.selectAll();
 
@@ -74,7 +62,10 @@ public class FMXLGUIController implements Initializable{
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	@FXML private TableView<AssemblyCode> tableAssemblyCode;
+    @FXML private TitledPane tpCode;
+    @FXML private TitledPane tpData;
+
+    @FXML private TableView<AssemblyCode> tableAssemblyCode;
 	@FXML private TableView<AssemblyCode> tableAssemblyData;
 	
 	@FXML private TableColumn<AssemblyCode, String> colSectionCode;
@@ -102,6 +93,7 @@ public class FMXLGUIController implements Initializable{
     @FXML private Button saveButton;
     @FXML private Button delButton;
     @FXML private Button addButton;
+    @FXML private Button editButton;
     @FXML private Button newButton;
     
     @FXML private TextField tfLabel;
@@ -144,11 +136,14 @@ public class FMXLGUIController implements Initializable{
         FileChooser fc = new FileChooser();
         fc.setTitle("Abrir archivo de codigo AGF");
         fc.getExtensionFilters().add(new ExtensionFilter("Assembly Generator File", "*.agf"));
+        fc.getExtensionFilters().add(new ExtensionFilter("Texto con codigo", "*.txt"));
         File file = fc.showOpenDialog(null);
-        fm = new FileManager(file.getAbsolutePath());
-        lbFile.setText(file.getAbsolutePath());
-        ArrayList<AssemblyCode> as = fm.loadCode();
-        fillTables(as);
+        if (file != null) {
+            fm = new FileManager(file.getAbsolutePath());
+            lbFile.setText(file.getAbsolutePath());
+            ArrayList<AssemblyCode> as = fm.loadCode();
+            fillTables(as);
+        }
     }
     
     public void fillTables(ArrayList<AssemblyCode> as) {
@@ -177,17 +172,6 @@ public class FMXLGUIController implements Initializable{
         System.exit(0);
     }
 
-    @FXML public void sectionEdit(CellEditEvent<AssemblyCode, String> edittedCell) {
-    //     AssemblyCode AssemblyCodeSelected =  tableAssemblyCode.getSelectionModel().getSelectedItem();
-    //     if (AssemblyCodeSelected.getSection().equals("")) {
-    //         AssemblyCodeSelected.setSection(edittedCell.getNewValue().toString());  
-    //         assemblyWarning.setVisible(false);
-    //     } else {
-    //         assemblyWarning.setVisible(true);
-    //     }
-    //     System.out.println("Hola");
-    }
-
     @FXML public void addButtonAction(ActionEvent event) {
         if(cbSection.getSelectionModel().getSelectedItem().equals(".code")){
             if (
@@ -212,11 +196,6 @@ public class FMXLGUIController implements Initializable{
                 System.err.println("Adding.....Failed");
                 assemblyWarning.setVisible(true);
             }
-            tfLabel.setText("");
-            tfMnemo.setText("");
-            tfOperands.setText("");
-            tfLabel.requestFocus();
-            tfLabel.selectAll();
         } else {
             if (
                 tfMnemo.getText().equals("db")||
@@ -230,12 +209,12 @@ public class FMXLGUIController implements Initializable{
                 System.err.println("Adding.....Failed");
                 assemblyWarning.setVisible(true);
             }
-            tfLabel.setText("");
-            tfMnemo.setText("");
-            tfOperands.setText("");
-            tfLabel.requestFocus();
-            tfLabel.selectAll();
         }
+        tfLabel.setText("");
+        tfMnemo.setText("");
+        tfOperands.setText("");
+        tfLabel.requestFocus();
+        tfLabel.selectAll();
     }
 
     @FXML public void delButtonAction(ActionEvent event) {
@@ -268,5 +247,72 @@ public class FMXLGUIController implements Initializable{
             }
         }
     }
-	
+    
+    @FXML public void editButtonAction(ActionEvent event){
+        ObservableList<AssemblyCode> selectedRowCode, allCodesCode;
+        allCodesCode = tableAssemblyCode.getItems();
+        selectedRowCode = tableAssemblyCode.getSelectionModel().getSelectedItems();
+        for (int i = 0; i < allCodesCode.size(); i++){
+            if(
+                (allCodesCode.get(i) == selectedRowCode.get(0))&&
+                selectedRowCode.get(0).getSection().equals("")
+            ){
+                if (
+                    tfMnemo.getText().equals("load")||
+                    tfMnemo.getText().equals("store")||
+                    tfMnemo.getText().equals("add")||
+                    tfMnemo.getText().equals("sub")||
+                    tfMnemo.getText().equals("input")||
+                    tfMnemo.getText().equals("output")||
+                    tfMnemo.getText().equals("jpos")||
+                    tfMnemo.getText().equals("jneg")||
+                    tfMnemo.getText().equals("jz")||
+                    tfMnemo.getText().equals("jnz")||
+                    tfMnemo.getText().equals("jmp")||
+                    tfMnemo.getText().equals("halt")
+                ){
+                    System.out.println("Editting.....OK");
+                    AssemblyCode newAssemblyCode = new AssemblyCode("",tfLabel.getText(),tfMnemo.getText(),tfOperands.getText());
+                    allCodesCode.set(i, newAssemblyCode);
+                    assemblyWarning.setVisible(false);
+                } else {
+                    System.err.println("Editting.....Failed");
+                    assemblyWarning.setVisible(true);
+                }
+            } else {
+                System.err.println("Editting.....Failed");
+                assemblyWarning.setVisible(true);
+            }
+        }
+        ObservableList<AssemblyCode> selectedRowData, allCodesData;
+        allCodesData = tableAssemblyData.getItems();
+        selectedRowData = tableAssemblyData.getSelectionModel().getSelectedItems();
+        for (int i = 0; i < allCodesData.size(); i++){
+            if(
+                (allCodesData.get(i) == selectedRowData.get(0))&&
+                selectedRowData.get(0).getSection().equals("")
+            ){
+                if (
+                    tfMnemo.getText().equals("db")||
+                    tfMnemo.getText().equals("equ")
+                ){
+                    System.out.println("Editting.....OK");
+                    AssemblyCode newAssemblyCode = new AssemblyCode("",tfLabel.getText(),tfMnemo.getText(),tfOperands.getText());
+                    allCodesData.set(i, newAssemblyCode);
+                    assemblyWarning.setVisible(false);
+                } else {
+                    System.err.println("Editting.....Failed");
+                    assemblyWarning.setVisible(true);
+                }
+            } else {
+                System.err.println("Editting.....Failed");
+                assemblyWarning.setVisible(true);
+            }
+        }
+        tfLabel.setText("");
+        tfMnemo.setText("");
+        tfOperands.setText("");
+        tfLabel.requestFocus();
+        tfLabel.selectAll();
+    }
 }
