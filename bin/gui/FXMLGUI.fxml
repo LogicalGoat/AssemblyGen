@@ -42,12 +42,12 @@
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveButtonAction" text="📄💾">
+            <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveButtonAction" text="💾">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button fx:id="openButton" mnemonicParsing="false" onAction="#openButtonAction" text="📄💾📂">
+            <Button fx:id="openButton" mnemonicParsing="false" onAction="#openButtonAction" text="📂">
                <font>
                   <Font size="18.0" />
                </font>
