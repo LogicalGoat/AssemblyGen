@@ -262,23 +262,26 @@ public class FMXLGUIController implements Initializable{
     }
 
     @FXML public void addButtonAction(ActionEvent event) {
+        String label = tfLabel.getText().toLowerCase();
+        String mnemo = tfMnemo.getText().toLowerCase();
+        String operands = tfOperands.getText().toLowerCase();
         if(cbSection.getSelectionModel().getSelectedItem().equals(".code")){
             if (
-                tfMnemo.getText().equals("load")||
-                tfMnemo.getText().equals("store")||
-                tfMnemo.getText().equals("add")||
-                tfMnemo.getText().equals("sub")||
-                tfMnemo.getText().equals("input")||
-                tfMnemo.getText().equals("output")||
-                tfMnemo.getText().equals("jpos")||
-                tfMnemo.getText().equals("jneg")||
-                tfMnemo.getText().equals("jz")||
-                tfMnemo.getText().equals("jnz")||
-                tfMnemo.getText().equals("jmp")||
-                tfMnemo.getText().equals("halt")
+                mnemo.equals("load")||
+                mnemo.equals("store")||
+                mnemo.equals("add")||
+                mnemo.equals("sub")||
+                mnemo.equals("input")||
+                mnemo.equals("output")||
+                mnemo.equals("jpos")||
+                mnemo.equals("jneg")||
+                mnemo.equals("jz")||
+                mnemo.equals("jnz")||
+                mnemo.equals("jmp")||
+                mnemo.equals("halt")
             ){
                 System.out.println("Adding.....OK");
-                AssemblyCode newAssemblyCode = new AssemblyCode("",tfLabel.getText(),tfMnemo.getText(),tfOperands.getText());
+                AssemblyCode newAssemblyCode = new AssemblyCode("",label,mnemo,operands);
                 tableAssemblyCode.getItems().add(newAssemblyCode);
                 assemblyWarning.setVisible(false);
             } else {
@@ -287,11 +290,11 @@ public class FMXLGUIController implements Initializable{
             }
         } else {
             if (
-                tfMnemo.getText().equals("db")||
-                tfMnemo.getText().equals("equ")
+                mnemo.equals("db")||
+                mnemo.equals("equ")
             ){
                 System.out.println("Adding.....OK");
-                AssemblyCode newAssemblyCode = new AssemblyCode("",tfLabel.getText(),"db",tfOperands.getText());
+                AssemblyCode newAssemblyCode = new AssemblyCode("",label,"db",operands);
                 tableAssemblyData.getItems().add(newAssemblyCode);
                 assemblyWarning.setVisible(false);
             } else {
@@ -338,6 +341,9 @@ public class FMXLGUIController implements Initializable{
     }
     
     @FXML public void editButtonAction(ActionEvent event){
+        String label = tfLabel.getText().toLowerCase();
+        String mnemo = tfMnemo.getText().toLowerCase();
+        String operands = tfOperands.getText().toLowerCase();
         ObservableList<AssemblyCode> selectedRowCode, allCodesCode;
         allCodesCode = tableAssemblyCode.getItems();
         selectedRowCode = tableAssemblyCode.getSelectionModel().getSelectedItems();
@@ -347,21 +353,21 @@ public class FMXLGUIController implements Initializable{
                 selectedRowCode.get(0).getSection().equals("")
             ){
                 if (
-                    tfMnemo.getText().equals("load")||
-                    tfMnemo.getText().equals("store")||
-                    tfMnemo.getText().equals("add")||
-                    tfMnemo.getText().equals("sub")||
-                    tfMnemo.getText().equals("input")||
-                    tfMnemo.getText().equals("output")||
-                    tfMnemo.getText().equals("jpos")||
-                    tfMnemo.getText().equals("jneg")||
-                    tfMnemo.getText().equals("jz")||
-                    tfMnemo.getText().equals("jnz")||
-                    tfMnemo.getText().equals("jmp")||
-                    tfMnemo.getText().equals("halt")
+                    mnemo.equals("load")||
+                    mnemo.equals("store")||
+                    mnemo.equals("add")||
+                    mnemo.equals("sub")||
+                    mnemo.equals("input")||
+                    mnemo.equals("output")||
+                    mnemo.equals("jpos")||
+                    mnemo.equals("jneg")||
+                    mnemo.equals("jz")||
+                    mnemo.equals("jnz")||
+                    mnemo.equals("jmp")||
+                    mnemo.equals("halt")
                 ){
                     System.out.println("Editting.....OK");
-                    AssemblyCode newAssemblyCode = new AssemblyCode("",tfLabel.getText(),tfMnemo.getText(),tfOperands.getText());
+                    AssemblyCode newAssemblyCode = new AssemblyCode("",label,mnemo,operands);
                     allCodesCode.set(i, newAssemblyCode);
                     assemblyWarning.setVisible(false);
                 } else {
@@ -382,11 +388,11 @@ public class FMXLGUIController implements Initializable{
                 selectedRowData.get(0).getSection().equals("")
             ){
                 if (
-                    tfMnemo.getText().equals("db")||
-                    tfMnemo.getText().equals("equ")
+                    mnemo.equals("db")||
+                    mnemo.equals("equ")
                 ){
                     System.out.println("Editting.....OK");
-                    AssemblyCode newAssemblyCode = new AssemblyCode("",tfLabel.getText(),tfMnemo.getText(),tfOperands.getText());
+                    AssemblyCode newAssemblyCode = new AssemblyCode("",label,mnemo,operands);
                     allCodesData.set(i, newAssemblyCode);
                     assemblyWarning.setVisible(false);
                 } else {
