@@ -5,7 +5,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import coding.AssemblyCode;
+import coding.*;
 import fileManager.FileManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -40,10 +40,17 @@ public class FMXLGUIController implements Initializable{
         colLabelCode.setCellValueFactory(new PropertyValueFactory<AssemblyCode, String>("label"));
         colMnemoCode.setCellValueFactory(new PropertyValueFactory<AssemblyCode, String>("mnemo"));
         colOperandsCode.setCellValueFactory(new PropertyValueFactory<AssemblyCode, String>("operands"));
+
         colSectionData.setCellValueFactory(new PropertyValueFactory<AssemblyCode, String>("section"));
         colLabelData.setCellValueFactory(new PropertyValueFactory<AssemblyCode, String>("label"));
         colMnemoData.setCellValueFactory(new PropertyValueFactory<AssemblyCode, String>("mnemo"));
         colOperandsData.setCellValueFactory(new PropertyValueFactory<AssemblyCode, String>("operands"));
+
+        colAddrC.setCellValueFactory(new PropertyValueFactory<MachineCode, String>("addr"));
+        colContC.setCellValueFactory(new PropertyValueFactory<MachineCode, String>("cont"));
+
+        colAddrX.setCellValueFactory(new PropertyValueFactory<MachineCode, String>("addr"));
+        colContX.setCellValueFactory(new PropertyValueFactory<MachineCode, String>("cont"));
         
         cbSection.getItems().add(".code");
         cbSection.getItems().add(".data");
@@ -51,6 +58,9 @@ public class FMXLGUIController implements Initializable{
         
         tableAssemblyCode.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         tableAssemblyData.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+        tableMachineC.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        tableMachineX.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         tfLabel.requestFocus();
         tfLabel.selectAll();
@@ -66,7 +76,10 @@ public class FMXLGUIController implements Initializable{
     @FXML private TitledPane tpData;
 
     @FXML private TableView<AssemblyCode> tableAssemblyCode;
-	@FXML private TableView<AssemblyCode> tableAssemblyData;
+    @FXML private TableView<AssemblyCode> tableAssemblyData;
+    
+    @FXML private TableView<MachineCode> tableMachineC;
+    @FXML private TableView<MachineCode> tableMachineX;
 	
 	@FXML private TableColumn<AssemblyCode, String> colSectionCode;
 	@FXML private TableColumn<AssemblyCode, String> colLabelCode;
@@ -76,7 +89,13 @@ public class FMXLGUIController implements Initializable{
 	@FXML private TableColumn<AssemblyCode, String> colSectionData;
 	@FXML private TableColumn<AssemblyCode, String> colLabelData;
 	@FXML private TableColumn<AssemblyCode, String> colMnemoData;
-	@FXML private TableColumn<AssemblyCode, String> colOperandsData;
+    @FXML private TableColumn<AssemblyCode, String> colOperandsData;
+    
+    @FXML private TableColumn<MachineCode, String> colAddrC;
+    @FXML private TableColumn<MachineCode, String> colContC;
+
+    @FXML private TableColumn<MachineCode, String> colAddrX;
+    @FXML private TableColumn<MachineCode, String> colContX;
 
     @FXML private Label lbFile;
     @FXML private Label assemblyWarning;
@@ -91,6 +110,7 @@ public class FMXLGUIController implements Initializable{
 
     @FXML private Button openButton;
     @FXML private Button saveButton;
+    @FXML private Button runButton;
     @FXML private Button delButton;
     @FXML private Button addButton;
     @FXML private Button editButton;
@@ -134,7 +154,7 @@ public class FMXLGUIController implements Initializable{
 
     @FXML public void openButtonAction(ActionEvent event) {
         FileChooser fc = new FileChooser();
-        fc.setTitle("Abrir archivo de codigo AGF");
+        fc.setTitle("Abrir archivo de codigo AGF o archivo de texto TXT");
         fc.getExtensionFilters().add(new ExtensionFilter("Assembly Generator File", "*.agf"));
         fc.getExtensionFilters().add(new ExtensionFilter("Texto con codigo", "*.txt"));
         File file = fc.showOpenDialog(null);
@@ -146,6 +166,75 @@ public class FMXLGUIController implements Initializable{
         }
     }
     
+    @FXML public void runButtonAction(ActionEvent event) {
+        System.out.println("Running.....");
+
+        while (!tableMachineC.getItems().isEmpty()) {
+            tableMachineC.getItems().remove(0);
+        }
+        while (!tableMachineX.getItems().isEmpty()) {
+            tableMachineX.getItems().remove(0);
+        }
+
+        for (AssemblyCode aCode : tableAssemblyCode.getItems()) {
+            if(aCode.getSection().equals("")){
+                switch (aCode.getLabel()) {
+                    case "load":
+                        
+                        break;
+                    case "store":
+                        
+                        break;
+                    case "add":
+
+                        break;
+                    case "sub":
+
+                        break;
+                    case "input":
+
+                        break;
+                    case "output":
+
+                        break;
+                    case "jpos":
+
+                        break;
+                    case "jneg":
+
+                        break;
+                    case "jz":
+
+                        break;
+                    case "jnz":
+
+                        break;
+                    case "jmp":
+
+                        break;
+                    case "halt":
+                    
+                        break;
+                    default:
+                        break;
+                }
+            } else {
+                tableMachineC.getItems().add(new MachineCode("SECTION",aCode.getSection()));
+                tableMachineX.getItems().add(new MachineCode("SECTION",aCode.getSection()));
+            }
+        }
+        for (AssemblyCode aCode : tableAssemblyData.getItems()) {
+            if(aCode.getSection().equals("")){
+
+            } else {
+                tableMachineC.getItems().add(new MachineCode("",""));
+                tableMachineX.getItems().add(new MachineCode("",""));
+                tableMachineC.getItems().add(new MachineCode("SECTION",aCode.getSection()));
+                tableMachineX.getItems().add(new MachineCode("SECTION",aCode.getSection()));
+            }
+        }
+    }
+
     public void fillTables(ArrayList<AssemblyCode> as) {
         ObservableList<AssemblyCode> olCode = FXCollections.observableArrayList();
         ObservableList<AssemblyCode> olData = FXCollections.observableArrayList();

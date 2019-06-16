@@ -37,21 +37,28 @@
       </MenuBar>
       <ToolBar layoutX="351.0" layoutY="25.0" prefHeight="49.0" prefWidth="318.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
          <items>
-            <Button fx:id="newButton" mnemonicParsing="false" onAction="#newButtonAction" text="📄">
+            <Button fx:id="newButton" mnemonicParsing="false" onAction="#newButtonAction" prefHeight="39.0" prefWidth="49.0" text="📄">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveButtonAction" text="💾">
+            <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveButtonAction" prefWidth="50.0" text="💾">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button fx:id="openButton" mnemonicParsing="false" onAction="#openButtonAction" text="📂">
+            <Button fx:id="openButton" mnemonicParsing="false" onAction="#openButtonAction" prefWidth="50.0" text="📂">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
+            <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="17.0" />
+            <Button fx:id="runButton" mnemonicParsing="false" onAction="#runButtonAction" prefWidth="50.0" text="▶">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="17.0" />
             <Label fx:id="lbFile" text="Archivo">
                <padding>
                   <Insets left="20.0" />
@@ -67,7 +74,7 @@
                      <children>
                         <Accordion fx:id="acAssembly" prefHeight="306.0" prefWidth="680.0" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="20.0">
                            <panes>
-                              <TitledPane fx:id="tpCode" text=".code">
+                              <TitledPane fx:id="tpCode" animated="false" text=".code">
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
@@ -86,7 +93,7 @@
                                     </AnchorPane>
                                  </content>
                               </TitledPane>
-                              <TitledPane fx:id="tpData" text=".data">
+                              <TitledPane fx:id="tpData" animated="false" text=".data">
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
@@ -161,18 +168,47 @@
                      <children>
                         <HBox alignment="CENTER" layoutX="120.0" layoutY="-10.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
                            <children>
-                              <TableView editable="true" prefHeight="457.0" prefWidth="89.0" HBox.hgrow="ALWAYS">
-                                 <columnResizePolicy>
-                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                 </columnResizePolicy>
-                                 <columns>
-                                    <TableColumn prefWidth="75.0" sortable="false" text="ADDR" />
-                                    <TableColumn prefWidth="75.0" sortable="false" text="CONT" />
-                                 </columns>
+                              <Accordion prefHeight="424.0" prefWidth="189.0" HBox.hgrow="ALWAYS">
+                                <panes>
+                                  <TitledPane animated="false" text="C++">
+                                    <content>
+                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                             <children>
+                                                <TableView fx:id="tableMachineC" editable="true" prefHeight="457.0" prefWidth="89.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
+                                                   <columnResizePolicy>
+                                                      <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                                   </columnResizePolicy>
+                                                   <columns>
+                                                      <TableColumn fx:id="colAddrC" prefWidth="75.0" sortable="false" text="ADDR" />
+                                                      <TableColumn fx:id="colContC" prefWidth="75.0" sortable="false" text="CONT" />
+                                                   </columns>
+                                                </TableView>
+                                             </children>
+                                          </AnchorPane>
+                                    </content>
+                                  </TitledPane>
+                                  <TitledPane animated="false" text="Xilinx">
+                                    <content>
+                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                             <children>
+                                                <TableView fx:id="tableMachineX" editable="true" prefHeight="457.0" prefWidth="89.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
+                                                   <columnResizePolicy>
+                                                      <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                                   </columnResizePolicy>
+                                                   <columns>
+                                                      <TableColumn fx:id="colAddrX" prefWidth="75.0" sortable="false" text="ADDR" />
+                                                      <TableColumn fx:id="colContX" prefWidth="75.0" sortable="false" text="CONT" />
+                                                   </columns>
+                                                </TableView>
+                                             </children>
+                                          </AnchorPane>
+                                    </content>
+                                  </TitledPane>
+                                </panes>
                                  <HBox.margin>
-                                    <Insets right="25.0" />
+                                    <Insets />
                                  </HBox.margin>
-                              </TableView>
+                              </Accordion>
                               <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
                                  <children>
                                     <Label text="Instructions Symbols Table">
