@@ -1,7 +1,11 @@
 package fileManager;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -18,7 +22,44 @@ public class FileManager {
         this.address = address;
     }
     
-    public void saveCode(ObservableList<AssemblyCode> code, ObservableList<AssemblyCode> data) {
+    public void saveCode(ObservableList<AssemblyCode> listCode, ObservableList<AssemblyCode> listData){
+        try{
+            File filetemp = new File(this.address);
+            if (filetemp.exists()){
+                filetemp.delete();
+                System.out.println("File deleted");
+                System.out.println("Creating new file...");
+                filetemp.createNewFile();
+            } else{
+                System.out.println("File created");
+                filetemp.createNewFile();
+            }
+            FileWriter fw = new FileWriter(filetemp);
+            BufferedWriter bw = new BufferedWriter(fw);
+
+            // leo todos los elementos de todos los objetos
+            for (AssemblyCode tempCode : listCode) {
+                bw.append(tempCode.getSection()+'\t'+tempCode.getLabel()+'\t'+tempCode.getMnemo()+'\t'+tempCode.getOperands()+'\n');
+            }
+            for (AssemblyCode tempData : listData) {
+                bw.append(tempData.getSection()+'\t'+tempData.getLabel()+'\t'+tempData.getMnemo()+'\t'+tempData.getOperands()+'\n');
+            }
+            String cadena;
+            FileReader fr = new FileReader(filetemp);
+            BufferedReader br = new BufferedReader(fr);
+            while((cadena = br.readLine())!=null) {
+                System.out.println(cadena);
+            }
+            fr.close();
+            br.close();
+
+            // cierro el filereader y el buffered reader
+            bw.close();
+            fw.close();
+
+        }catch(Exception e1){
+          
+        }
     }
     
     public ArrayList<AssemblyCode> loadCode(){

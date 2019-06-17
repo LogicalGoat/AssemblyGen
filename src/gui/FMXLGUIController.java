@@ -150,12 +150,21 @@ public class FMXLGUIController implements Initializable{
         if(lbFile.getText().equals("Nuevo proyecto")){
             saveAsButtonAction(null);
         }else{
-
+            fm.saveCode(tableAssemblyCode.getItems(), tableAssemblyData.getItems());
         }
     }
 
     @FXML public void saveAsButtonAction(ActionEvent event) {
-
+        FileChooser fc = new FileChooser();
+        fc.setTitle("Elegir ubicación para archivo de codigo AGF o archivo de texto TXT");
+        fc.getExtensionFilters().add(new ExtensionFilter("Assembly Generator File", "*.agf"));
+        fc.getExtensionFilters().add(new ExtensionFilter("Texto con codigo", "*.txt"));
+        File file = fc.showSaveDialog(null);
+        if (file != null) {
+            fm = new FileManager(file.getAbsolutePath());
+            lbFile.setText(file.getAbsolutePath());
+            fm.saveCode(tableAssemblyCode.getItems(), tableAssemblyData.getItems());
+        }
     }
 
     @FXML public void openButtonAction(ActionEvent event) {
@@ -378,11 +387,11 @@ public class FMXLGUIController implements Initializable{
                     assemblyWarning.setVisible(false);
                 } else {
                     System.err.println("Editting.....Failed");
-                    assemblyWarning.setVisible(true);
+                    //assemblyWarning.setVisible(true);
                 }
             } else {
                 System.err.println("Editting.....Failed");
-                assemblyWarning.setVisible(true);
+                //assemblyWarning.setVisible(true);
             }
         }
         ObservableList<AssemblyCode> selectedRowData, allCodesData;
@@ -403,11 +412,11 @@ public class FMXLGUIController implements Initializable{
                     assemblyWarning.setVisible(false);
                 } else {
                     System.err.println("Editting.....Failed");
-                    assemblyWarning.setVisible(true);
+                    //assemblyWarning.setVisible(true);
                 }
             } else {
                 System.err.println("Editting.....Failed");
-                assemblyWarning.setVisible(true);
+                //assemblyWarning.setVisible(true);
             }
         }
         tfLabel.setText("");
