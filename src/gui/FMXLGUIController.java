@@ -136,6 +136,12 @@ public class FMXLGUIController implements Initializable{
         while (!tableAssemblyData.getItems().isEmpty()) {
             tableAssemblyData.getItems().remove(0);
         }
+        while (!tableMachineC.getItems().isEmpty()){
+            tableMachineC.getItems().remove(0);
+        }
+        while (!tableMachineX.getItems().isEmpty()){
+            tableMachineX.getItems().remove(0);
+        }
     	tableAssemblyCode.getItems().add(new AssemblyCode(".code","","",""));
         tableAssemblyData.getItems().add(new AssemblyCode(".data","","",""));
     }
