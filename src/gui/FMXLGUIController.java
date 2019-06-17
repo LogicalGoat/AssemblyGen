@@ -181,7 +181,26 @@ public class FMXLGUIController implements Initializable{
         }
     }
     
+    public static String xilinx(String n){
+        if(n.equals("B00")){
+            return "X"+'"'+n+'"';
+        }else{
+            return "X"+'"'+n+'"'+',';
+        }
+    }
+
+    public static String cpp(String n){
+        return "0x"+n;
+    }
+
     @FXML public void runButtonAction(ActionEvent event) {
+
+        ObservableList<MachineCode> olCodeC = FXCollections.observableArrayList();
+        ObservableList<MachineCode> olDataC = FXCollections.observableArrayList();
+
+        ObservableList<MachineCode> olCodeX = FXCollections.observableArrayList();
+        ObservableList<MachineCode> olDataX = FXCollections.observableArrayList();
+
         System.out.println("Running.....");
 
         while (!tableMachineC.getItems().isEmpty()) {
@@ -190,10 +209,31 @@ public class FMXLGUIController implements Initializable{
         while (!tableMachineX.getItems().isEmpty()) {
             tableMachineX.getItems().remove(0);
         }
-
+        int j = 0;
+        for (AssemblyCode aData : tableAssemblyData.getItems()) {
+            if(aData.getSection().equals("")){
+                String x = String.format("%X", j);
+                if (x.length() == 1) {
+                    x = "0"+x;
+                }
+                olDataC.add(new MachineCode(x, cpp(String.format("%X", aData.getOperands()))));
+                olDataX.add(new MachineCode(x, xilinx(String.format("%X", aData.getOperands()))));
+                j++;
+            } else {
+                olDataC.add(new MachineCode("",""));
+                olDataX.add(new MachineCode("",""));
+                olDataC.add(new MachineCode("SECTION",aData.getSection()));
+                olDataX.add(new MachineCode("SECTION",aData.getSection()));
+            }
+        }
+        int i = 0;
         for (AssemblyCode aCode : tableAssemblyCode.getItems()) {
             if(aCode.getSection().equals("")){
-                switch (aCode.getLabel()) {
+                String x = String.format("%X", i);
+                if (x.length() == 1) {
+                    x = "0"+x;
+                }
+                switch (aCode.getMnemo()) {
                     case "load":
                         
                         break;
@@ -207,10 +247,12 @@ public class FMXLGUIController implements Initializable{
 
                         break;
                     case "input":
-
+                        olCodeC.add(new MachineCode(x, cpp("400")));
+                        olCodeX.add(new MachineCode(x, xilinx("400")));
                         break;
                     case "output":
-
+                        olCodeC.add(new MachineCode(x, cpp("500")));
+                        olCodeX.add(new MachineCode(x, xilinx("500")));
                         break;
                     case "jpos":
 
@@ -228,38 +270,50 @@ public class FMXLGUIController implements Initializable{
 
                         break;
                     case "halt":
-                    
+                        olCodeC.add(new MachineCode(x, cpp("B00")));
+                        olCodeX.add(new MachineCode(x, xilinx("B00")));
                         break;
                     default:
                         break;
                 }
+                i++;
             } else {
-                tableMachineC.getItems().add(new MachineCode("SECTION",aCode.getSection()));
-                tableMachineX.getItems().add(new MachineCode("SECTION",aCode.getSection()));
+                olCodeC.add(new MachineCode("SECTION",aCode.getSection()));
+                olCodeX.add(new MachineCode("SECTION",aCode.getSection()));
             }
         }
-        for (AssemblyCode aCode : tableAssemblyData.getItems()) {
-            if(aCode.getSection().equals("")){
-
-            } else {
-                tableMachineC.getItems().add(new MachineCode("",""));
-                tableMachineX.getItems().add(new MachineCode("",""));
-                tableMachineC.getItems().add(new MachineCode("SECTION",aCode.getSection()));
-                tableMachineX.getItems().add(new MachineCode("SECTION",aCode.getSection()));
-            }
+        System.out.println("olcodec");
+        for (MachineCode mcdc : olCodeC) {
+            System.out.println(mcdc.toString());
+            tableMachineC.getItems().add(mcdc);
+        }
+        System.out.println("oldatac");
+        for (MachineCode mcdc : olDataC) {
+            System.out.println(mcdc.toString());
+            tableMachineC.getItems().add(mcdc);
+        }
+        System.out.println("olcodex");
+        for (MachineCode mcdx : olCodeX) {
+            System.out.println(mcdx.toString());
+            tableMachineX.getItems().add(mcdx);
+        }
+        System.out.println("oldatax");
+        for (MachineCode mcdx : olDataX) {
+            System.out.println(mcdx.toString());
+            tableMachineX.getItems().add(mcdx);
         }
     }
 
     public void fillTables(ArrayList<AssemblyCode> as) {
-        ObservableList<AssemblyCode> olCode = FXCollections.observableArrayList();
-        ObservableList<AssemblyCode> olData = FXCollections.observableArrayList();
+        ObservableList<AssemblyCode> olCodeC = FXCollections.observableArrayList();
+        ObservableList<AssemblyCode> olDataC = FXCollections.observableArrayList();
         boolean wData = false;
         for (AssemblyCode temp : as) {
             if((temp.getSection().equals(".data")||(wData))){
                 wData = true;
-                olData.add(temp);
+                olDataC.add(temp);
             }else{
-                olCode.add(temp);
+                olCodeC.add(temp);
             }
         }
         while (!tableAssemblyCode.getItems().isEmpty()) {
@@ -268,8 +322,8 @@ public class FMXLGUIController implements Initializable{
         while (!tableAssemblyData.getItems().isEmpty()) {
             tableAssemblyData.getItems().remove(0);
         }
-        tableAssemblyCode.setItems(olCode);
-        tableAssemblyData.setItems(olData);
+        tableAssemblyCode.setItems(olCodeC);
+        tableAssemblyData.setItems(olDataC);
     }
 
     @FXML public void closeItemAction(ActionEvent event) {
