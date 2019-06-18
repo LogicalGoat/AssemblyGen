@@ -51,6 +51,13 @@ public class FMXLGUIController implements Initializable{
 
         colAddrX.setCellValueFactory(new PropertyValueFactory<MachineCode, String>("addr"));
         colContX.setCellValueFactory(new PropertyValueFactory<MachineCode, String>("cont"));
+
+        colSymbolsIns.setCellValueFactory(new PropertyValueFactory<Instruction, String>("symbols"));
+        colAddrIns.setCellValueFactory(new PropertyValueFactory<Instruction, String>("addr"));
+
+        colSymbolsDat.setCellValueFactory(new PropertyValueFactory<Data, String>("symbols"));
+        colAddrDat.setCellValueFactory(new PropertyValueFactory<Data, String>("addr"));
+        colContDat.setCellValueFactory(new PropertyValueFactory<Data, String>("cont"));
         
         cbSection.getItems().add(".code");
         cbSection.getItems().add(".data");
@@ -80,6 +87,9 @@ public class FMXLGUIController implements Initializable{
     
     @FXML private TableView<MachineCode> tableMachineC;
     @FXML private TableView<MachineCode> tableMachineX;
+
+    @FXML private TableView<Instruction> tableInstructions;
+    @FXML private TableView<Data> tableDatas;
 	
 	@FXML private TableColumn<AssemblyCode, String> colSectionCode;
 	@FXML private TableColumn<AssemblyCode, String> colLabelCode;
@@ -96,6 +106,13 @@ public class FMXLGUIController implements Initializable{
 
     @FXML private TableColumn<MachineCode, String> colAddrX;
     @FXML private TableColumn<MachineCode, String> colContX;
+
+    @FXML private TableColumn<Instruction, String> colSymbolsIns;
+    @FXML private TableColumn<Instruction, String> colAddrIns;
+
+    @FXML private TableColumn<Data, String> colSymbolsDat;
+    @FXML private TableColumn<Data, String> colAddrDat;
+    @FXML private TableColumn<Data, String> colContDat;
 
     @FXML private Label lbFile;
     @FXML private Label assemblyWarning;
@@ -142,6 +159,12 @@ public class FMXLGUIController implements Initializable{
         while (!tableMachineX.getItems().isEmpty()){
             tableMachineX.getItems().remove(0);
         }
+        while (!tableInstructions.getItems().isEmpty()){
+            tableInstructions.getItems().remove(0);
+        }
+        while (!tableDatas.getItems().isEmpty()){
+            tableDatas.getItems().remove(0);
+        }
     	tableAssemblyCode.getItems().add(new AssemblyCode(".code","","",""));
         tableAssemblyData.getItems().add(new AssemblyCode(".data","","",""));
     }
@@ -182,11 +205,7 @@ public class FMXLGUIController implements Initializable{
     }
     
     public static String xilinx(String n){
-        if(n.equals("B00")){
-            return "X"+'"'+n+'"';
-        }else{
-            return "X"+'"'+n+'"'+',';
-        }
+        return "X"+'"'+n+'"';
     }
 
     public static String cpp(String n){
@@ -216,14 +235,33 @@ public class FMXLGUIController implements Initializable{
                 if (x.length() == 1) {
                     x = "0"+x;
                 }
-                olDataC.add(new MachineCode(x, cpp(String.format("%X", aData.getOperands()))));
-                olDataX.add(new MachineCode(x, xilinx(String.format("%X", aData.getOperands()))));
+                if(aData.getOperands().equals("")) aData.setOperands("0");
+                String y = String.format("%X", Integer.valueOf(aData.getOperands()));
+                if (y.length() == 1) {
+                    y = "0"+y;
+                }
+                olDataC.add(new MachineCode(x, cpp(y), aData.getLabel()));
+                olDataX.add(new MachineCode(x, xilinx(y), aData.getLabel()));
+                tableDatas.getItems().add(new Data(aData.getLabel(),x,y));
                 j++;
             } else {
                 olDataC.add(new MachineCode("",""));
                 olDataX.add(new MachineCode("",""));
                 olDataC.add(new MachineCode("SECTION",aData.getSection()));
                 olDataX.add(new MachineCode("SECTION",aData.getSection()));
+            }
+        }
+        int k = 0;
+        for (AssemblyCode aCode : tableAssemblyCode.getItems()) {
+            if(aCode.getSection().equals("")){
+                String x = String.format("%X", k);
+                if (x.length() == 1) {
+                    x = "0"+x;
+                }
+                if(!aCode.getLabel().equals("")){
+                    tableInstructions.getItems().add(new Instruction(aCode.getLabel(),x));
+                }
+                k++;
             }
         }
         int i = 0;
@@ -233,49 +271,85 @@ public class FMXLGUIController implements Initializable{
                 if (x.length() == 1) {
                     x = "0"+x;
                 }
+                String order = "0";
+                String acc = "00";
+                for (MachineCode mc : olDataC) {
+                    try {
+                        if (mc.getVar().equals(aCode.getOperands())){
+                            acc = mc.getAddr();
+                        }
+                    } catch (Exception e) {}
+                }
                 switch (aCode.getMnemo()) {
                     case "load":
-                        
+                        order = "0";
                         break;
                     case "store":
-                        
+                        order = "1";
                         break;
                     case "add":
-
+                        order = "2";
                         break;
                     case "sub":
-
+                        order = "3";
                         break;
                     case "input":
-                        olCodeC.add(new MachineCode(x, cpp("400")));
-                        olCodeX.add(new MachineCode(x, xilinx("400")));
+                        order = "4";
+                        acc = "00";
                         break;
                     case "output":
-                        olCodeC.add(new MachineCode(x, cpp("500")));
-                        olCodeX.add(new MachineCode(x, xilinx("500")));
+                        order = "5";
+                        acc = "00";
                         break;
                     case "jpos":
-
+                        order = "6";
+                        for (Instruction ins : tableInstructions.getItems()) {
+                            if(aCode.getOperands().equals(ins.getSymbols())){
+                                acc = ins.getAddr();
+                            }
+                        }
                         break;
                     case "jneg":
-
+                        order = "7";
+                        for (Instruction ins : tableInstructions.getItems()) {
+                            if(aCode.getOperands().equals(ins.getSymbols())){
+                                acc = ins.getAddr();
+                            }
+                        }
                         break;
                     case "jz":
-
+                        order = "8";
+                        for (Instruction ins : tableInstructions.getItems()) {
+                            if(aCode.getOperands().equals(ins.getSymbols())){
+                                acc = ins.getAddr();
+                            }
+                        }
                         break;
                     case "jnz":
-
+                        order = "9";
+                        for (Instruction ins : tableInstructions.getItems()) {
+                            if(aCode.getOperands().equals(ins.getSymbols())){
+                                acc = ins.getAddr();
+                            }
+                        }
                         break;
                     case "jmp":
-
+                        order = "A";
+                        for (Instruction ins : tableInstructions.getItems()) {
+                            if(aCode.getOperands().equals(ins.getSymbols())){
+                                acc = ins.getAddr();
+                            }
+                        }
                         break;
                     case "halt":
-                        olCodeC.add(new MachineCode(x, cpp("B00")));
-                        olCodeX.add(new MachineCode(x, xilinx("B00")));
+                        order = "B";
+                        acc = "00";
                         break;
                     default:
                         break;
                 }
+                olCodeC.add(new MachineCode(x, cpp(order+acc)));
+                olCodeX.add(new MachineCode(x, xilinx(order+acc)));
                 i++;
             } else {
                 olCodeC.add(new MachineCode("SECTION",aCode.getSection()));

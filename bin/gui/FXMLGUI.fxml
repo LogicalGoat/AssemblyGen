@@ -216,13 +216,13 @@
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <TableView editable="true" prefHeight="200.0" prefWidth="264.0">
+                                    <TableView fx:id="tableInstructions" editable="true" prefHeight="200.0" prefWidth="264.0">
                                        <columnResizePolicy>
                                           <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                        </columnResizePolicy>
                                        <columns>
-                                          <TableColumn prefWidth="75.0" sortable="false" text="Symbols" />
-                                          <TableColumn prefWidth="75.0" sortable="false" text="ADDR (ROM)" />
+                                          <TableColumn fx:id="colSymbolsIns" prefWidth="75.0" sortable="false" text="Symbols" />
+                                          <TableColumn fx:id="colAddrIns" prefWidth="75.0" sortable="false" text="ADDR (ROM)" />
                                        </columns>
                                        <VBox.margin>
                                           <Insets bottom="10.0" />
@@ -236,14 +236,14 @@
                                           <Insets top="10.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <TableView editable="true" prefHeight="200.0" prefWidth="264.0">
+                                    <TableView fx:id="tableDatas" editable="true" prefHeight="200.0" prefWidth="264.0">
                                        <columnResizePolicy>
                                           <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                        </columnResizePolicy>
                                        <columns>
-                                          <TableColumn prefWidth="75.0" sortable="false" text="Symbols" />
-                                          <TableColumn prefWidth="75.0" sortable="false" text="ADDR (RAM)" />
-                                          <TableColumn prefWidth="75.0" text="CONT" />
+                                          <TableColumn fx:id="colSymbolsDat" prefWidth="75.0" sortable="false" text="Symbols" />
+                                          <TableColumn fx:id="colAddrDat" prefWidth="75.0" sortable="false" text="ADDR (RAM)" />
+                                          <TableColumn fx:id="colContDat" prefWidth="75.0" text="CONT (INICIAL)" />
                                        </columns>
                                        <VBox.margin>
                                           <Insets />
