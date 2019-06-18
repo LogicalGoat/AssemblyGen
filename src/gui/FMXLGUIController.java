@@ -41,8 +41,8 @@ public class FMXLGUIController implements Initializable{
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		
-		assemblyWarning.setVisible(false);
-		
+        assemblyWarning.setVisible(false);
+        
 		colSectionCode.setCellValueFactory(new PropertyValueFactory<AssemblyCode, String>("section"));
         colLabelCode.setCellValueFactory(new PropertyValueFactory<AssemblyCode, String>("label"));
         colMnemoCode.setCellValueFactory(new PropertyValueFactory<AssemblyCode, String>("mnemo"));
@@ -183,6 +183,12 @@ public class FMXLGUIController implements Initializable{
         while (!tableDatas.getItems().isEmpty()){
             tableDatas.getItems().remove(0);
         }
+
+        copyCodeCButton.setDisable(true);
+        copyCodeXButton.setDisable(true);
+        copyDataCButton.setDisable(true);
+        copyDataXButton.setDisable(true);
+
     	tableAssemblyCode.getItems().add(new AssemblyCode(".code","","",""));
         tableAssemblyData.getItems().add(new AssemblyCode(".data","","",""));
     }
@@ -231,6 +237,11 @@ public class FMXLGUIController implements Initializable{
     }
 
     @FXML public void runButtonAction(ActionEvent event) {
+
+        copyCodeCButton.setDisable(false);
+        copyCodeXButton.setDisable(false);
+        copyDataCButton.setDisable(false);
+        copyDataXButton.setDisable(false);
 
         olCodeC = FXCollections.observableArrayList();
         olDataC = FXCollections.observableArrayList();
