@@ -595,7 +595,7 @@ public class FMXLGUIController implements Initializable{
         Alert about = new Alert(AlertType.INFORMATION);
         about.setTitle("Assembly Generator v2.5 Alpha");
         about.setHeaderText("Assembly Generator v2.5 Alpha");
-        about.setContentText("Hecho por: \n - Andrés Silva \n - Julio Rodriguez \n - Sebastián Leon \n - Fabián Perdomo");
+        about.setContentText("Hecho por: \n - Andres Silva \n - Julio Rodriguez \n - Sebastian Leon \n - Fabian Perdomo\n\n https://github.com/andreworking/AssemblyGen");
         about.initStyle(StageStyle.UTILITY);
         about.showAndWait();
     }
