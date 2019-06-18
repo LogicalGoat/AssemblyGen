@@ -169,7 +169,7 @@
                                     <content>
                                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                              <children>
-                                                <TableView fx:id="tableMachineC" editable="true" prefHeight="457.0" prefWidth="89.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
+                                                <TableView fx:id="tableMachineC" editable="true" prefHeight="457.0" prefWidth="89.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
                                                    <columnResizePolicy>
                                                       <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                                    </columnResizePolicy>
@@ -178,6 +178,20 @@
                                                       <TableColumn fx:id="colContC" prefWidth="75.0" sortable="false" text="CONT" />
                                                    </columns>
                                                 </TableView>
+                                                <HBox alignment="CENTER" layoutX="18.6" layoutY="288.0" prefHeight="25.0" prefWidth="367.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                                   <children>
+                                                      <Button fx:id="copyCodeCButton" mnemonicParsing="false" onAction="#copyCodeCButtonAction" text="Copiar .code" HBox.hgrow="ALWAYS">
+                                                         <HBox.margin>
+                                                            <Insets right="20.0" />
+                                                         </HBox.margin>
+                                                      </Button>
+                                                      <Button fx:id="copyDataCButton" layoutX="142.0" layoutY="10.0" mnemonicParsing="false" onAction="#copyDataCButtonAction" text="Copiar .data" HBox.hgrow="ALWAYS">
+                                                         <HBox.margin>
+                                                            <Insets left="20.0" />
+                                                         </HBox.margin>
+                                                      </Button>
+                                                   </children>
+                                                </HBox>
                                              </children>
                                           </AnchorPane>
                                     </content>
@@ -186,7 +200,7 @@
                                     <content>
                                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                              <children>
-                                                <TableView fx:id="tableMachineX" editable="true" prefHeight="457.0" prefWidth="89.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
+                                                <TableView fx:id="tableMachineX" editable="true" prefHeight="457.0" prefWidth="89.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
                                                    <columnResizePolicy>
                                                       <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                                    </columnResizePolicy>
@@ -195,6 +209,20 @@
                                                       <TableColumn fx:id="colContX" prefWidth="75.0" sortable="false" text="CONT" />
                                                    </columns>
                                                 </TableView>
+                                                <HBox alignment="CENTER" prefHeight="25.0" prefWidth="367.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                                   <children>
+                                                      <Button fx:id="copyCodeXButton" mnemonicParsing="false" onAction="#copyCodeXButtonAction" text="Copiar .code" HBox.hgrow="ALWAYS">
+                                                         <HBox.margin>
+                                                            <Insets right="20.0" />
+                                                         </HBox.margin>
+                                                      </Button>
+                                                      <Button fx:id="copyDataXButton" layoutX="142.0" layoutY="10.0" mnemonicParsing="false" onAction="#copyDataXButtonAction" text="Copiar .data" HBox.hgrow="ALWAYS">
+                                                         <HBox.margin>
+                                                            <Insets left="20.0" />
+                                                         </HBox.margin>
+                                                      </Button>
+                                                   </children>
+                                                </HBox>
                                              </children>
                                           </AnchorPane>
                                     </content>

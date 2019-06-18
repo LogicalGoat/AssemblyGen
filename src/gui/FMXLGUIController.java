@@ -7,7 +7,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import coding.*;
-import fileManager.FileManager;
+import fileManager.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -27,6 +27,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.stage.FileChooser;
 import javafx.stage.StageStyle;
 import javafx.stage.FileChooser.ExtensionFilter;;
@@ -67,12 +69,13 @@ public class FMXLGUIController implements Initializable{
         cbSection.getItems().add(".code");
         cbSection.getItems().add(".data");
         cbSection.setValue(".code");
-        
+
         tableAssemblyCode.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         tableAssemblyData.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-
         tableMachineC.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         tableMachineX.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        tableInstructions.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        tableDatas.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         tfLabel.requestFocus();
         tfLabel.selectAll();
@@ -138,6 +141,10 @@ public class FMXLGUIController implements Initializable{
     @FXML private Button addButton;
     @FXML private Button editButton;
     @FXML private Button newButton;
+    @FXML private Button copyCodeCButton;
+    @FXML private Button copyDataCButton;
+    @FXML private Button copyCodeXButton;
+    @FXML private Button copyDataXButton;
     
     @FXML private TextField tfLabel;
     @FXML private TextField tfMnemo;
@@ -146,6 +153,11 @@ public class FMXLGUIController implements Initializable{
     @FXML private ChoiceBox<String> cbSection;
 
     static FileManager fm;
+
+    static ObservableList<MachineCode> olCodeC = FXCollections.observableArrayList();
+    static ObservableList<MachineCode> olDataC = FXCollections.observableArrayList();
+    static ObservableList<MachineCode> olCodeX = FXCollections.observableArrayList();
+    static ObservableList<MachineCode> olDataX = FXCollections.observableArrayList();
     
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -220,11 +232,11 @@ public class FMXLGUIController implements Initializable{
 
     @FXML public void runButtonAction(ActionEvent event) {
 
-        ObservableList<MachineCode> olCodeC = FXCollections.observableArrayList();
-        ObservableList<MachineCode> olDataC = FXCollections.observableArrayList();
+        olCodeC = FXCollections.observableArrayList();
+        olDataC = FXCollections.observableArrayList();
 
-        ObservableList<MachineCode> olCodeX = FXCollections.observableArrayList();
-        ObservableList<MachineCode> olDataX = FXCollections.observableArrayList();
+        olCodeX = FXCollections.observableArrayList();
+        olDataX = FXCollections.observableArrayList();
 
         System.out.println("Running.....");
 
@@ -570,5 +582,53 @@ public class FMXLGUIController implements Initializable{
 
     @FXML public void aboutButtonAction(ActionEvent event){
         System.out.println("Acerca de");
+    }
+    @FXML public void copyCodeCButtonAction(ActionEvent event){
+        final Clipboard clipboard = Clipboard.getSystemClipboard();
+        final ClipboardContent content = new ClipboardContent();
+        String s = "";
+        for (MachineCode mc : olCodeC) {
+            if (!mc.getAddr().equals("SECTION")) {
+                s = s + mc.getCont() + "," + "\n";
+            }
+        }
+        content.putString(s);
+        clipboard.setContent(content);
+    }
+    @FXML public void copyDataCButtonAction(ActionEvent event){
+        final Clipboard clipboard = Clipboard.getSystemClipboard();
+        final ClipboardContent content = new ClipboardContent();
+        String s = "";
+        for (MachineCode mc : olDataC) {
+            if (!mc.getAddr().equals("SECTION")) {
+                s = s + mc.getCont() + "," + "\n";
+            }
+        }
+        content.putString(s);
+        clipboard.setContent(content);
+    }
+    @FXML public void copyCodeXButtonAction(ActionEvent event){
+        final Clipboard clipboard = Clipboard.getSystemClipboard();
+        final ClipboardContent content = new ClipboardContent();
+        String s = "";
+        for (MachineCode mc : olCodeX) {
+            if (!mc.getAddr().equals("SECTION")) {
+                s = s + mc.getCont() + "," + "\n";
+            }
+        }
+        content.putString(s);
+        clipboard.setContent(content);
+    }
+    @FXML public void copyDataXButtonAction(ActionEvent event){
+        final Clipboard clipboard = Clipboard.getSystemClipboard();
+        final ClipboardContent content = new ClipboardContent();
+        String s = "";
+        for (MachineCode mc : olDataX) {
+            if (!mc.getAddr().equals("SECTION")) {
+                s = s + mc.getCont() + "," + "\n";
+            }
+        }
+        content.putString(s);
+        clipboard.setContent(content);
     }
 }
