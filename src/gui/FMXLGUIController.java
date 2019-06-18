@@ -581,7 +581,12 @@ public class FMXLGUIController implements Initializable{
     }
 
     @FXML public void aboutButtonAction(ActionEvent event){
-        System.out.println("Acerca de");
+        Alert about = new Alert(AlertType.INFORMATION);
+        about.setTitle("Assembly Generator v2.5 Alpha");
+        about.setHeaderText("Assembly Generator v2.5 Alpha");
+        about.setContentText("Hecho por: \n - Andrés Silva \n - Julio Rodriguez \n - Sebastián Leon \n - Fabián Perdomo");
+        about.initStyle(StageStyle.UTILITY);
+        about.showAndWait();
     }
     @FXML public void copyCodeCButtonAction(ActionEvent event){
         final Clipboard clipboard = Clipboard.getSystemClipboard();
