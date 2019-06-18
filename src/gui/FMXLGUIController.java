@@ -3,6 +3,7 @@ package gui;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import coding.*;
@@ -13,7 +14,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Accordion;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -22,8 +25,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
+import javafx.stage.StageStyle;
 import javafx.stage.FileChooser.ExtensionFilter;;
 
 public class FMXLGUIController implements Initializable{
@@ -122,6 +127,7 @@ public class FMXLGUIController implements Initializable{
     @FXML private MenuItem openMenuItem;
     @FXML private MenuItem newMenuItem;
     @FXML private MenuItem closeMenuItem;
+    @FXML private MenuItem aboutMenuItem;
 
     @FXML private Accordion acAssembly;
 
@@ -401,7 +407,15 @@ public class FMXLGUIController implements Initializable{
     }
 
     @FXML public void closeItemAction(ActionEvent event) {
-        System.exit(0);
+        Alert dialog = new Alert(AlertType.CONFIRMATION);
+        dialog.setTitle("Ventana de Confirmacion");
+        dialog.setHeaderText("¿Salir?");
+        dialog.initStyle(StageStyle.DECORATED);
+        dialog.setContentText("Los cambios no guardados se PERDERÁN");
+        Optional<ButtonType>result = dialog.showAndWait();
+        if(result.get() == ButtonType.OK){
+            System.exit(0);
+        }
     }
 
     @FXML public void addButtonAction(ActionEvent event) {
@@ -552,5 +566,9 @@ public class FMXLGUIController implements Initializable{
         tfOperands.setText("");
         tfLabel.requestFocus();
         tfLabel.selectAll();
+    }
+
+    @FXML public void aboutButtonAction(ActionEvent event){
+        System.out.println("Acerca de");
     }
 }

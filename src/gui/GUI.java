@@ -25,7 +25,7 @@ public class GUI extends Application{
             stage.setMinWidth(500);
             stage.setMinHeight(600);
             stage.setTitle("Assembly Generator");
-            stage.getIcons().add(new Image("GUI/icon.png"));
+			stage.getIcons().add(new Image("GUI/icon.png"));
 		}catch(IOException e) {
 			System.err.println("Error al inicializar FXML");
 		}
