@@ -1,6 +1,9 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package gui;
-
-import java.io.IOException;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -9,26 +12,32 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-public class GUI extends Application{
+/**
+ *
+ * @author vaio
+ */
+public class GUI extends Application {
+    
+    @Override
+    public void start(Stage stage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("FXMLGUI.fxml"));
+        
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+        stage.setMinWidth(500);
+        stage.setMinHeight(600);
+        stage.setTitle("Assembly Generator");
+        stage.getIcons().add(new Image("/gui/icon.png"));
+        stage.setScene(scene);
+        stage.show();
+    }
 
-	public static void main(String[] args) {
-		launch(args);
-	}
-
-	@Override
-	public void start(Stage stage) throws Exception {
-		try {
-			Parent root = FXMLLoader.load(getClass().getResource("/GUI/FXMLGUI.fxml"));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-            stage.setMinWidth(500);
-            stage.setMinHeight(600);
-            stage.setTitle("Assembly Generator");
-			stage.getIcons().add(new Image("/GUI/icon.png"));
-		}catch(IOException e) {
-			System.err.println("Error al inicializar FXML");
-		}
-	}
-
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        launch(args);
+    }
+    
 }

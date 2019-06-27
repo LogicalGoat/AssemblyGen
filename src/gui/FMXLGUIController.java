@@ -236,6 +236,13 @@ public class FMXLGUIController implements Initializable{
         return "0x"+n;
     }
 
+    public void eraseResults() {
+        tableDatas.getItems().clear();
+        tableInstructions.getItems().clear();
+        tableMachineC.getItems().clear();
+        tableMachineX.getItems().clear();
+    }
+
     @FXML public void runButtonAction(ActionEvent event) {
 
         copyCodeCButton.setDisable(false);
@@ -249,14 +256,8 @@ public class FMXLGUIController implements Initializable{
         olCodeX = FXCollections.observableArrayList();
         olDataX = FXCollections.observableArrayList();
 
-        System.out.println("Running.....");
+        eraseResults();
 
-        while (!tableMachineC.getItems().isEmpty()) {
-            tableMachineC.getItems().remove(0);
-        }
-        while (!tableMachineX.getItems().isEmpty()) {
-            tableMachineX.getItems().remove(0);
-        }
         int j = 0;
         for (AssemblyCode aData : tableAssemblyData.getItems()) {
             if(aData.getSection().equals("")){

@@ -7,7 +7,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="567.0" prefWidth="740.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.FMXLGUIController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="567.0" prefWidth="740.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.FXMLGUIController">
    <children>
       <MenuBar layoutX="10.0" layoutY="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <menus>
@@ -75,7 +75,7 @@
                                        <children>
                                           <TableView fx:id="tableAssemblyCode" editable="true" prefHeight="330.0" prefWidth="440.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="0.0">
                                              <columnResizePolicy>
-                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                                
                                              </columnResizePolicy>
                                              <columns>
                                                 <TableColumn fx:id="colSectionCode" prefWidth="75.0" sortable="false" text="SECTION" />
@@ -94,7 +94,7 @@
                                        <children>
                                           <TableView fx:id="tableAssemblyData" editable="true" prefHeight="330.0" prefWidth="440.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="0.0">
                                              <columnResizePolicy>
-                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                                
                                              </columnResizePolicy>
                                              <columns>
                                                 <TableColumn fx:id="colSectionData" prefWidth="75.0" sortable="false" text="SECTION" />
@@ -171,7 +171,7 @@
                                              <children>
                                                 <TableView fx:id="tableMachineC" editable="true" prefHeight="457.0" prefWidth="89.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
                                                    <columnResizePolicy>
-                                                      <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                                      
                                                    </columnResizePolicy>
                                                    <columns>
                                                       <TableColumn fx:id="colAddrC" prefWidth="75.0" sortable="false" text="ADDR" />
@@ -202,7 +202,7 @@
                                              <children>
                                                 <TableView fx:id="tableMachineX" editable="true" prefHeight="457.0" prefWidth="89.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
                                                    <columnResizePolicy>
-                                                      <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                                      
                                                    </columnResizePolicy>
                                                    <columns>
                                                       <TableColumn fx:id="colAddrX" prefWidth="75.0" sortable="false" text="ADDR" />
@@ -241,7 +241,7 @@
                                     </Label>
                                     <TableView fx:id="tableInstructions" editable="true" prefHeight="200.0" prefWidth="264.0">
                                        <columnResizePolicy>
-                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                          
                                        </columnResizePolicy>
                                        <columns>
                                           <TableColumn fx:id="colSymbolsIns" prefWidth="75.0" sortable="false" text="Symbols" />
@@ -261,7 +261,7 @@
                                     </Label>
                                     <TableView fx:id="tableDatas" editable="true" prefHeight="200.0" prefWidth="264.0">
                                        <columnResizePolicy>
-                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                          
                                        </columnResizePolicy>
                                        <columns>
                                           <TableColumn fx:id="colSymbolsDat" prefWidth="75.0" sortable="false" text="Symbols" />
