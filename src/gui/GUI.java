@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author vaio
+ * @author ansil
  */
 public class GUI extends Application {
     
